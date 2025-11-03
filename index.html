@@ -1,15 +1,45 @@
 <!doctype html>
 <html>
     <body>
-        <textarea id="msg"></textarea>
+        <textarea id="text"></textarea>
         <button onclick="cifrar()">cifrar</button>
     </body>
     <script>
+        const ALPHABET_LENGHT = 26;
+        const NUMBERS_LENGHT = 10;
+
         function cifrar() {
-            let msg = document.getElementById("msg").value;
-            console.log("msg", msg);
+            let text = document.getElementById("text").value.toUpperCase();
+
+            let msg = text.split(" ");
+
+            let indexInText = Array.from(text).map((letra, index) => {
+                return { index, letra };
+            });
+
+            let cifrada = "";
+            for (let i = 1; i < indexInText.length; i++) {
+                let index = calculaTotalIndice(indexInText.slice(i));
+                cifrada += alfabeto(index);
+                console.log("CIFRADA", cifrada);
+            }
         }
-        function alfabeto(letra) {
+        //Acha soma dos índices
+        function calculaTotalIndice(palavra) {
+            const sum = Object.values(palavra).reduce(
+                (total, curr) => total + curr.index,
+                0,
+            );
+
+            // //Caso a soma ultrapasse o alfabeto deve reiniciar a contagem,
+            // // nesse caso, para achar basta calcular a difença para achar o índice do alfabeto
+            if (sum > ALPHABET_LENGHT) {
+                return sum - ALPHABET_LENGHT;
+            }
+            console.log("SUM ", sum);
+            return sum;
+        }
+        function alfabeto(index) {
             let alfabeto = [
                 "A",
                 "B",
@@ -38,18 +68,18 @@
                 "Y",
                 "Z",
             ];
-            let a = alfabeto.findIndex((x) => x === letra) + 1;
-            return a;
+            // let a = alfabeto.findIndex((x) => x === letra) + 1;
+            return alfabeto[index];
         }
-        let testletra = alfabeto("A");
-        console.log("letra index", testletra);
+        // let testletra = alfabeto(2);
+        // console.log("letra index", testletra);
 
         function numeros(numero) {
             let numeros = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
             let index = numeros.findIndex((x) => x === numero) + 1;
             return index;
         }
-        let testnumero = numeros(0);
-        console.log("número index", testnumero);
+        // let testnumero = numeros(0);
+        // console.log("número index", testnumero);
     </script>
 </html>
