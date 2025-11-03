@@ -1,8 +1,11 @@
 <!doctype html>
 <html>
     <body>
+        <label>Texto original</label>
         <textarea id="text"></textarea>
         <button onclick="cifrar()">cifrar</button>
+        <label>Texto cifrado</label>
+        <textarea id="cifrada"></textarea>
     </body>
     <script>
         const ALPHABET_LENGHT = 26;
@@ -23,6 +26,8 @@
                 cifrada += alfabeto(index);
                 console.log("CIFRADA", cifrada);
             }
+            let textAreaCifrada = document.getElementById("cifrada");
+            textAreaCifrada.innerHTML = cifrada;
         }
         //Acha soma dos índices
         function calculaTotalIndice(palavra) {
