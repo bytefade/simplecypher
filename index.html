@@ -14,19 +14,28 @@
         function cifrar() {
             let text = document.getElementById("text").value.toUpperCase();
 
-            let msg = text.split(" ");
+            let msgs = text.split(" ");
 
-            let indexInText = Array.from(text).map((letra, index) => {
-                /* Resolve problema da soma do 1º e 2º caracter, então add 1 */
-                index += 1;
-                return { index, letra };
-            });
-            console.log("indexInText", indexInText);
             let cifrada = "";
-            for (let i = 0; i < indexInText.length; i++) {
-                let index = calculaTotalIndice(indexInText.slice(i));
-                cifrada += alfabeto(index);
-                console.log("CIFRADA", cifrada);
+            let contMsgs = 0;
+            for (msg of msgs) {
+                let indexInText = Array.from(msg).map((letra, index) => {
+                    /* Resolve problema da soma do 1º e 2º caracter, então add 1 */
+                    index += 1;
+                    return { index, letra };
+                });
+                // console.log("indexInText", indexInText);
+
+                for (let i = 0; i < indexInText.length; i++) {
+                    let index = calculaTotalIndice(indexInText.slice(i));
+                    cifrada += alfabeto(index);
+                    console.log("CIFRADA", cifrada);
+                }
+
+                if (msgs.length > 1 && contMsgs < msgs.length - 1) {
+                    cifrada += "$";
+                }
+                contMsgs++;
             }
             let textAreaCifrada = document.getElementById("cifrada");
             textAreaCifrada.innerHTML = cifrada;
