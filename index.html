@@ -17,11 +17,13 @@
             let msg = text.split(" ");
 
             let indexInText = Array.from(text).map((letra, index) => {
+                /* Resolve problema da soma do 1º e 2º caracter, então add 1 */
+                index += 1;
                 return { index, letra };
             });
-
+            console.log("indexInText", indexInText);
             let cifrada = "";
-            for (let i = 1; i < indexInText.length; i++) {
+            for (let i = 0; i < indexInText.length; i++) {
                 let index = calculaTotalIndice(indexInText.slice(i));
                 cifrada += alfabeto(index);
                 console.log("CIFRADA", cifrada);
@@ -29,6 +31,7 @@
             let textAreaCifrada = document.getElementById("cifrada");
             textAreaCifrada.innerHTML = cifrada;
         }
+
         //Acha soma dos índices
         function calculaTotalIndice(palavra) {
             const sum = Object.values(palavra).reduce(
@@ -36,44 +39,42 @@
                 0,
             );
 
-            // //Caso a soma ultrapasse o alfabeto deve reiniciar a contagem,
-            // // nesse caso, para achar basta calcular a difença para achar o índice do alfabeto
             if (sum > ALPHABET_LENGHT) {
                 return sum - ALPHABET_LENGHT;
             }
-            console.log("SUM ", sum);
+
             return sum;
         }
+
         function alfabeto(index) {
-            let alfabeto = [
-                "A",
-                "B",
-                "C",
-                "D",
-                "E",
-                "F",
-                "G",
-                "H",
-                "I",
-                "J",
-                "K",
-                "L",
-                "M",
-                "N",
-                "O",
-                "P",
-                "Q",
-                "R",
-                "S",
-                "T",
-                "U",
-                "V",
-                "W",
-                "X",
-                "Y",
-                "Z",
-            ];
-            // let a = alfabeto.findIndex((x) => x === letra) + 1;
+            let alfabeto = {
+                1: "A",
+                2: "B",
+                3: "C",
+                4: "D",
+                5: "E",
+                6: "F",
+                7: "G",
+                8: "H",
+                9: "I",
+                10: "J",
+                11: "K",
+                12: "L",
+                13: "M",
+                14: "N",
+                15: "O",
+                16: "P",
+                17: "Q",
+                18: "R",
+                19: "S",
+                20: "T",
+                21: "U",
+                22: "V",
+                23: "W",
+                24: "X",
+                25: "Y",
+                26: "Z",
+            };
             return alfabeto[index];
         }
         // let testletra = alfabeto(2);
