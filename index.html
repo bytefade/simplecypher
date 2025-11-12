@@ -26,6 +26,8 @@
             let palavra_base = "";
             let cifrada = "";
 
+            let contMsgs = 0;
+
             for (msg of msgs) {
                 let len = msg.length;
                 let k = gerarKValido(len);
@@ -43,6 +45,10 @@
                         cifrada += caracteres(retorno_cifrada);
                     }
                 }
+                if (msgs.length > 1 && contMsgs < msgs.length - 1) {
+                    cifrada += "$";
+                }
+                contMsgs++;
             }
             let textAreaCifrada = document.getElementById("cifrada");
             textAreaCifrada.innerHTML = cifrada;
