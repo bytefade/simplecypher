@@ -19,46 +19,47 @@
         <textarea id="decifrada"></textarea>
     </body>
     <script>
+        const ALPHANUMERIC_LENGHT = 35;
         function init_cifrar() {
             let text = document.getElementById("text").value.toUpperCase();
             let msgs = text.split(" ");
 
-            let palavra_base = "";
             let cifrada = "";
 
             let contMsgs = 0;
 
             for (msg of msgs) {
                 let len = msg.length;
-                let k = gerarKValido(len);
-                let sumIdx = sum(len);
-                console.log(sumIdx);
+
+                let numberOfStep = step();
+
+                cifrada += `$${numberOfStep}$`;
+
                 for (i = 0; i < len; i++) {
-                    let i_letra = caracteres(i, msg[i]);
+                    let index = caracteres(i, msg[i]);
+                    let retorno_cifrada = cifrar(index, numberOfStep, i);
 
-                    let retorno_cifrada = cifrar(i_letra, len, sumIdx, k);
-                    // let caracter = caracteres(retorno_cifrada);
-                    // let existe = cifrada.indexOf(caracter);
-
-                    // if (existe !== -1) {
-                    //     cifrada += caracteres(retorno_cifrada + 1);
-                    // } else {
                     cifrada += caracteres(retorno_cifrada);
-                    // }
                 }
                 if (msgs.length > 1 && contMsgs < msgs.length - 1) {
-                    cifrada += "$";
+                    cifrada += "@";
                 }
                 contMsgs++;
             }
             let textAreaCifrada = document.getElementById("cifrada");
             textAreaCifrada.innerHTML = cifrada;
         }
+        function cifrar(index, step, position) {
+            let offset = position % 2 === 0 ? step : -step;
+            let result =
+                (index + offset + ALPHANUMERIC_LENGHT) % ALPHANUMERIC_LENGHT;
+            return result;
+        }
         function init_decifrar() {
             let text = document
                 .getElementById("text_cifrado")
                 .value.toUpperCase();
-            let msgs = text.split(" ");
+            let msgs = text.split("@");
 
             let palavra_base = "";
             let cifrada = "";
@@ -66,24 +67,16 @@
             let contMsgs = 0;
 
             for (msg of msgs) {
-                let len = msg.length;
-                let k = gerarKValido(len);
-                let sumIdx = sum(len);
-                console.log(sumIdx);
-
+                let step = msg.substring(1, 3);
+                let newmsg = msg.slice(4);
+                let len = newmsg.length;
+                console.log("msg, len, lenStep", newmsg, len, step);
                 for (i = 0; i < len; i++) {
-                    let i_letra = caracteres(i, msg[i]);
-
-                    let retorno_cifrada = decifrar(i_letra, len, sumIdx, k);
+                    let cipherIndex = caracteres(i, newmsg[i]);
+                    let retorno_cifrada = decifrar(cipherIndex, step, i);
                     console.log("retorno_cifrada", retorno_cifrada);
-                    // let caracter = caracteres(retorno_cifrada);
-                    // let existe = cifrada.indexOf(caracter);
 
-                    // if (existe !== -1) {
-                    //     cifrada += caracteres(retorno_cifrada - 1);
-                    // } else {
                     cifrada += caracteres(retorno_cifrada);
-                    // }
                 }
                 if (msgs.length > 1 && contMsgs < msgs.length - 1) {
                     cifrada += "$";
@@ -93,50 +86,13 @@
             let textAreaCifrada = document.getElementById("decifrada");
             textAreaCifrada.innerHTML = cifrada;
         }
-        function sum(x) {
-            let s = 0;
-            for (i = 0; i <= x; i++) {
-                s += i;
-            }
-            return s;
-        }
-        function cifrar(i, wl, sumIdx, k) {
-            return (i * k + (sumIdx % wl)) % wl;
-        }
-        function decifrar(pos_cif, wl, sumIdx, k) {
-            const kInv = inversoModular(k, wl);
-            console.log(
-                `pos_cif: ${pos_cif}, wl: ${wl}, k: ${k} kInv: ${kInv} sumidx: ${sumIdx}`,
-            );
-            return ((pos_cif - (sumIdx % wl) + wl) * kInv) % wl;
-        }
 
-        // Função para gerar um k válido (coprimo com WL)
-        function gerarKValido(wl, tentativas = 100) {
-            for (let k = 1; k < tentativas; k++) {
-                if (mdc(k, wl) === 1) {
-                    return k;
-                }
-            }
-            return 1; //fallback seguro (1 é sempre coprimo)
-        }
-
-        // Função para calcular MDC (Máximo Divisor Comum)
-        function mdc(a, b) {
-            while (b !== 0) {
-                let temp = b;
-                b = a % b;
-                a = temp;
-            }
-            return a;
-        }
-        function inversoModular(k, wl) {
-            for (let x = 1; x < wl; x++) {
-                if ((k * x) % wl === 1) {
-                    return x;
-                }
-            }
-            return 1; //fallback
+        function decifrar(cipherIndex, step, position) {
+            let offset = position % 2 === 0 ? step : -step;
+            let result =
+                (cipherIndex - offset + ALPHANUMERIC_LENGHT) %
+                ALPHANUMERIC_LENGHT;
+            return result;
         }
 
         function caracteres(index, simbolo = null) {
@@ -184,6 +140,9 @@
             }
 
             return caracteres[index];
+        }
+        function step() {
+            return Math.floor(Math.random() * ALPHANUMERIC_LENGHT);
         }
     </script>
 </html>
