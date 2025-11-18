@@ -61,30 +61,28 @@
                 .value.toUpperCase();
             let msgs = text.split("@");
 
-            let palavra_base = "";
-            let cifrada = "";
+            let decifrada = "";
 
             let contMsgs = 0;
 
             for (msg of msgs) {
-                let step = msg.substring(1, 3);
-                let newmsg = msg.slice(4);
+                let step = msg.split("$")[1];
+                let newmsg = msg.split("$")[2];
                 let len = newmsg.length;
-                console.log("msg, len, lenStep", newmsg, len, step);
+
                 for (i = 0; i < len; i++) {
                     let cipherIndex = caracteres(i, newmsg[i]);
                     let retorno_cifrada = decifrar(cipherIndex, step, i);
                     console.log("retorno_cifrada", retorno_cifrada);
 
-                    cifrada += caracteres(retorno_cifrada);
+                    decifrada += caracteres(retorno_cifrada);
                 }
                 if (msgs.length > 1 && contMsgs < msgs.length - 1) {
-                    cifrada += "$";
+                    decifrada += " ";
                 }
-                contMsgs++;
             }
             let textAreaCifrada = document.getElementById("decifrada");
-            textAreaCifrada.innerHTML = cifrada;
+            textAreaCifrada.innerHTML = decifrada;
         }
 
         function decifrar(cipherIndex, step, position) {
