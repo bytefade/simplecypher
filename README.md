@@ -3,7 +3,7 @@ Roteiro:
 - Cifrar texto simples em português sem acento OK
 - Cifrar números OK
 - Criar seperador de palavras OK
-- Decifrar texto
+- Decifrar texto OK
 - Melhorar a interface
 - Cifrar/Decifrar texto com acentos
 - Cifrar/Decifrar texto com pontuação, caracteres especiais

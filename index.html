@@ -140,7 +140,13 @@
             return caracteres[index];
         }
         function step() {
-            return Math.floor(Math.random() * ALPHANUMERIC_LENGHT);
+            let random = Math.floor(Math.random() * ALPHANUMERIC_LENGHT);
+
+            if (random === 0) {
+                return step();
+            }
+
+            return random;
         }
     </script>
 </html>
