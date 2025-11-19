@@ -2,21 +2,26 @@
 <html>
     <head>
         <title>Simple cypher</title>
+        <link rel="stylesheet" href="app.css" />
     </head>
     <body>
-        <h4>Cifrar texto</h4>
-        <label>Texto original</label>
-        <textarea id="text"></textarea>
-        <button onclick="init_cifrar()">cifrar</button>
-        <label>Texto cifrado</label>
-        <textarea id="cifrada"></textarea>
+        <div class="cypher">
+            <h4>Cifrar texto</h4>
+            <label>Texto original</label>
+            <textarea class="input" id="text"></textarea>
+            <button onclick="init_cifrar()">cifrar</button>
+            <label>Texto cifrado</label>
+            <textarea class="output" id="cifrada"></textarea>
+        </div>
 
-        <h4>Decifrar texto</h4>
-        <label>Texto cifrado</label>
-        <textarea id="text_cifrado"></textarea>
-        <button onclick="init_decifrar()">decifrar</button>
-        <label>Texto original</label>
-        <textarea id="decifrada"></textarea>
+        <div class="cypher">
+            <h4>Decifrar texto</h4>
+            <label>Texto cifrado</label>
+            <textarea class="input" id="text_cifrado"></textarea>
+            <button onclick="init_decifrar()">decifrar</button>
+            <label>Texto original</label>
+            <textarea class="output" id="decifrada"></textarea>
+        </div>
     </body>
     <script>
         const ALPHANUMERIC_LENGHT = 35;

@@ -4,7 +4,7 @@ Roteiro:
 - Cifrar números OK
 - Criar seperador de palavras OK
 - Decifrar texto OK
-- Melhorar a interface
+- Melhorar a interface OK
 - Cifrar/Decifrar texto com acentos
 - Cifrar/Decifrar texto com pontuação, caracteres especiais
 - Permitir configurar a forma de cifragem (não salvar em banco sql)
