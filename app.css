@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+.cypher {
+    margin: 0 auto;
+    width: 800px;
+}
+.cypher textarea {
+    margin: 0 0 0.5rem 0;
+    padding: 5px;
+    font-size: 15px;
+}
+textarea {
+    display: block;
+    width: 100%;
+    height: 150px;
+}
+button {
+    display: block;
+    padding: 3px 20px;
+    margin: 0 0 1rem 0;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+h4 {
+    text-transform: uppercase;
+    padding: 0;
+    margin: 10px 0;
+}
+label {
+    font-weight: normal;
+}

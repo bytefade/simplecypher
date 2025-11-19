@@ -24,7 +24,7 @@
         </div>
     </body>
     <script>
-        const ALPHANUMERIC_LENGHT = 35;
+        const ALPHANUMERIC_LENGHT = 56;
         function init_cifrar() {
             let text = document.getElementById("text").value.toUpperCase();
             let msgs = text.split(" ");
@@ -126,6 +126,49 @@
                 "X",
                 "Y",
                 "Z",
+                "Á",
+                "À",
+                "Â",
+                "Ã",
+                "É",
+                "Ê",
+                "Í",
+                "Ó",
+                "Ô",
+                "Õ",
+                "Ú",
+                "Ç",
+                "!",
+                // "@",
+                // "#",
+                // "%",
+                // "^",
+                // "&",
+                // "*",
+                // "(",
+                // ")",
+                // "+",
+                // "=",
+                // "{",
+                // "}",
+                // "[",
+                // "]",
+                ";",
+                ":",
+                "'",
+                ",",
+                ".",
+                // "<",
+                // ">",
+                "?",
+                // "/",
+                // "'\'",
+                "|",
+                // "~",
+                "-",
+                // "$",
+                // "€",
+                // "£",
                 "0",
                 "1",
                 "2",
@@ -139,6 +182,8 @@
             ];
 
             if (simbolo) {
+                // console.log("simbolo", simbolo);
+                // console.log("simbolo retorno", caracteres.indexOf(simbolo));
                 return caracteres.indexOf(simbolo);
             }
 
