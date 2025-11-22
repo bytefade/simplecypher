@@ -5,40 +5,88 @@
         <link rel="stylesheet" href="app.css" />
     </head>
     <body>
-        <div class="cypher">
-            <h4>Cifrar texto</h4>
-            <label>Texto original</label>
-            <textarea class="input" id="text"></textarea>
-            <button onclick="init_cifrar()">cifrar</button>
-            <label>Texto cifrado</label>
-            <textarea class="output" id="cifrada"></textarea>
-        </div>
+        <main>
+            <div class="config">
+                <h4>Configurações</h4>
+                <fieldset>
+                    <legend>Saída do texto:</legend>
+                    <div>
+                        <input
+                            type="radio"
+                            id="alta"
+                            value="alta"
+                            name="type_text"
+                            checked
+                        />
+                        <label for="alta">Maiúscula</label>
+                    </div>
+                    <div>
+                        <input
+                            type="radio"
+                            id="baixa"
+                            value="baixa"
+                            name="type_text"
+                        />
+                        <label for="baixa">Minúscula</label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Tipo de separador:</legend>
+                    <div>
+                        <select id="separador">
+                            <option value="">Selecione</option>
+                            <option value="@" selected>@</option>
+                            <option value="$">$</option>
+                            <option value="#">#</option>
+                            <option value="&">&</option>
+                            <option value="_">_</option>
+                        </select>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="cypher">
+                <h4>Cifrar texto</h4>
+                <label>Texto original</label>
+                <textarea class="input" id="text"></textarea>
+                <button onclick="init_cifrar()">cifrar</button>
+                <label>Texto cifrado</label>
+                <textarea class="output" id="cifrada"></textarea>
+            </div>
 
-        <div class="cypher">
-            <h4>Decifrar texto</h4>
-            <label>Texto cifrado</label>
-            <textarea class="input" id="text_cifrado"></textarea>
-            <button onclick="init_decifrar()">decifrar</button>
-            <label>Texto original</label>
-            <textarea class="output" id="decifrada"></textarea>
-        </div>
+            <div class="cypher">
+                <h4>Decifrar texto</h4>
+                <label>Texto cifrado</label>
+                <textarea class="input" id="text_cifrado"></textarea>
+                <button onclick="init_decifrar()">decifrar</button>
+                <label>Texto original</label>
+                <textarea class="output" id="decifrada"></textarea>
+            </div>
+        </main>
     </body>
     <script>
         const ALPHANUMERIC_LENGHT = 56;
+        const ALTERNATIVE_SEPARATOR = "__";
         function init_cifrar() {
             let text = document.getElementById("text").value.toUpperCase();
             let msgs = text.split(" ");
+            let separador = tipoSeparador();
 
+            console.log(separador);
             let cifrada = "";
 
             let contMsgs = 0;
 
             for (msg of msgs) {
+                msg = msg.trim();
                 let len = msg.length;
 
                 let numberOfStep = step();
 
-                cifrada += `$${numberOfStep}$`;
+                if (separador === "$") {
+                    cifrada += `${ALTERNATIVE_SEPARATOR}${numberOfStep}${ALTERNATIVE_SEPARATOR}`;
+                } else {
+                    cifrada += `$${numberOfStep}$`;
+                }
 
                 for (i = 0; i < len; i++) {
                     let index = caracteres(i, msg[i]);
@@ -47,7 +95,7 @@
                     cifrada += caracteres(retorno_cifrada);
                 }
                 if (msgs.length > 1 && contMsgs < msgs.length - 1) {
-                    cifrada += "@";
+                    cifrada += separador;
                 }
                 contMsgs++;
             }
@@ -64,15 +112,24 @@
             let text = document
                 .getElementById("text_cifrado")
                 .value.toUpperCase();
-            let msgs = text.split("@");
+            let separador = tipoSeparador();
+            let msgs = text.split(separador);
 
             let decifrada = "";
 
             let contMsgs = 0;
 
             for (msg of msgs) {
-                let step = msg.split("$")[1];
-                let newmsg = msg.split("$")[2];
+                let step, newmsg;
+                console.log("separador", separador);
+                if (separador === "$") {
+                    step = msg.split(ALTERNATIVE_SEPARATOR)[1];
+                    newmsg = msg.split(ALTERNATIVE_SEPARATOR)[2];
+                } else {
+                    step = msg.split("$")[1];
+                    newmsg = msg.split("$")[2];
+                }
+                console.log(step, newmsg);
                 let len = newmsg.length;
 
                 for (i = 0; i < len; i++) {
@@ -86,8 +143,8 @@
                     decifrada += " ";
                 }
             }
-            let textAreaCifrada = document.getElementById("decifrada");
-            textAreaCifrada.innerHTML = decifrada;
+
+            tipoDeTexto(decifrada);
         }
 
         function decifrar(cipherIndex, step, position) {
@@ -97,7 +154,21 @@
                 ALPHANUMERIC_LENGHT;
             return result;
         }
+        function tipoDeTexto(decifrada) {
+            let textAreaCifrada = document.getElementById("decifrada");
+            let tipoSaidaTexto = document.querySelector(
+                'input[name="type_text"]:checked',
+            ).value;
+            console.log(tipoSaidaTexto);
+            textAreaCifrada.innerHTML =
+                tipoSaidaTexto == "alta"
+                    ? decifrada.toUpperCase()
+                    : decifrada.toLowerCase();
+        }
 
+        function tipoSeparador() {
+            return document.getElementById("separador").value;
+        }
         function caracteres(index, simbolo = null) {
             let caracteres = [
                 "A",

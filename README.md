@@ -7,6 +7,6 @@ Roteiro:
 - Melhorar a interface OK
 - Cifrar/Decifrar texto com acentos OK (parcial, mas funcional)
 - Cifrar/Decifrar texto com pontuação, caracteres especiais OK (parcial, mas funcional)
-- Permitir configurar a forma de cifragem (não salvar em banco sql)
+- Permitir configurar a detalhes de cifragem (não salvar em banco sql) OK
 - Permitir baixar as configurações de cifragem
 - Peritir subir as configurações de cifragem
